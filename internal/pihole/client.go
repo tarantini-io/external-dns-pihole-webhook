@@ -46,8 +46,8 @@ func (r *RecordsResponse) Records(rtype string) *[]Host {
 		Map[string, Host](r.Config.DNS.Hosts, &result, func(s string) (Host, error) {
 			split := strings.Split(s, " ")
 			return Host{
-				name:   split[0],
-				target: split[1],
+				name:   split[1],
+				target: split[0],
 			}, nil
 		})
 	}
