@@ -2,6 +2,7 @@ package pihole
 
 import (
 	"context"
+	"github.com/scaleway/scaleway-sdk-go/logger"
 	"sigs.k8s.io/external-dns/endpoint"
 	"sigs.k8s.io/external-dns/plan"
 	"sigs.k8s.io/external-dns/provider"
@@ -41,6 +42,7 @@ func (p *PiholeProvider) Records(ctx context.Context) ([]*endpoint.Endpoint, err
 func (p *PiholeProvider) ApplyChanges(ctx context.Context, changes *plan.Changes) error {
 	for _, ep := range changes.Delete {
 		if err := p.api.deleteRecord(ctx, ep); err != nil {
+			logger.Errorf("error deleting record %s: %v", ep.DNSName, err)
 			return err
 		}
 	}
@@ -60,17 +62,20 @@ func (p *PiholeProvider) ApplyChanges(ctx context.Context, changes *plan.Changes
 			}
 		}
 		if err := p.api.deleteRecord(ctx, ep); err != nil {
+			logger.Errorf("error deleting record %s: %v", ep.DNSName, err)
 			return err
 		}
 	}
 
 	for _, ep := range changes.Create {
 		if err := p.api.createRecord(ctx, ep); err != nil {
+			logger.Errorf("error creating record %s: %v", ep.DNSName, err)
 			return err
 		}
 	}
 	for _, ep := range updateNew {
 		if err := p.api.createRecord(ctx, ep); err != nil {
+			logger.Errorf("error creating record %s: %v", ep.DNSName, err)
 			return err
 		}
 	}
