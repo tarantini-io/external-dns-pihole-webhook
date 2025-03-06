@@ -67,22 +67,17 @@ func pathForType(rtype string) (string, error) {
 }
 
 func pathForEndpoint(ep *endpoint.Endpoint) (string, error) {
-	var p string
-	var split string
 	switch ep.RecordType {
 	case endpoint.RecordTypeCNAME:
-		p = "cnameRecords"
-		split = "%2C"
+		return fmt.Sprintf("/config/dns/cnameRecords/%s,%s", ep.DNSName, ep.Targets[0]), nil
 	case endpoint.RecordTypeA:
-		p = "hosts"
-		split = "%20"
+		return fmt.Sprintf("/config/dns/hosts/%s %s", ep.Targets[0], ep.DNSName), nil
 	case endpoint.RecordTypeAAAA:
-		p = "hosts"
-		split = "%20"
+		return fmt.Sprintf("/config/dns/hosts/%s %s", ep.Targets[0], ep.DNSName), nil
 	default:
 		return "", errors.New("Unknown RecordType")
 	}
-	return fmt.Sprintf("/config/dns/%s/%s%s%s", p, ep.Targets[0], split, ep.DNSName), nil
+
 }
 
 // newPiholeClient creates a new Pihole API client.

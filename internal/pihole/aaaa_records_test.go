@@ -31,10 +31,10 @@ func (suite *PiholeTestSuite) TestListAAAAEndpoints() {
 			Config: RecordsConfig{
 				DNS: DNS{
 					Hosts: []string{
-						"test-one.example.io 1.1.1.1",
-						"test-one.example.com 1.1.1.1",
-						"test-two.example.io 2.2.2.2",
-						"test-three.example.io b29f:3008:3ac4:753e:d124:f276:b92f:5d91",
+						"1.1.1.1 test-one.example.io ",
+						"1.1.1.1 test-one.example.com",
+						"2.2.2.2 test-two.example.io",
+						"b29f:3008:3ac4:753e:d124:f276:b92f:5d91 test-three.example.io",
 					},
 				},
 			},

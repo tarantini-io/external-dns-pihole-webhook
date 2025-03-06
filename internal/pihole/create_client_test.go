@@ -21,7 +21,7 @@ func (suite *PiholeTestSuite) TestAuthEndpoint() {
 		var bod LoginRequest
 		_ = json.NewDecoder(r.Body).Decode(&bod)
 		assert.Equal(t, "/api/auth", r.URL.Path)
-		assert.Equal(t, http.MethodGet, r.Method)
+		assert.Equal(t, http.MethodPost, r.Method)
 		assert.Equal(t, LoginRequest{Password: "password"}, bod)
 		return
 	})
