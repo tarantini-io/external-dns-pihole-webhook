@@ -1,0 +1,20 @@
+name: Cut Release
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  release-please:
+    name: Check Commit for Release Trigger
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check and Adjust SemVer
+        uses: googleapis/release-please-action@v4
+        with:
+          token: ${{ secrets.PAT }}
+          release-type: go

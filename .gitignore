@@ -1,0 +1,7 @@
+### IntelliJ IDEA ###
+.idea
+###
+.envrc
+.private/
+external-dns-pihole-webhook
+.DS_Store
